@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Gestão de Horários de Aula - Artigo</title>
+<style>
+    @page { size: A4; }
+    html, body { margin: 0; padding: 0; background: #fff; color: #000; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 12pt; line-height: 1.15; }
+    p { margin: 0 0 6pt; text-align: justify; text-indent: 0; }
+    h1, h2, h3 { font-size: 12pt; margin: 0; }
+    h1 { text-align: center; font-weight: bold; text-transform: uppercase; margin-bottom: 12pt; }
+    h2 { font-weight: bold; text-transform: uppercase; margin: 14pt 0 6pt; break-after: avoid; }
+    h3 { font-weight: normal; text-transform: uppercase; margin: 10pt 0 6pt; break-after: avoid; }
+    h2 + h3 { margin-top: 12pt; }
+    .preencher { background: #fff59d; }
+    .espaco-notas { float: left; width: 0; height: 222mm; }
+    .notas { float: left; clear: left; width: 100%; height: 24mm; display: flex; flex-direction: column; justify-content: flex-end; }
+    .autores { text-align: right; margin-bottom: 12pt; }
+    .autores p { text-align: right; margin: 0; }
+    .titulo-resumo { text-align: center; font-weight: bold; margin: 10pt 0 6pt; }
+    .resumo p { margin-bottom: 6pt; }
+    .notas { font-size: 10pt; line-height: 1.1; }
+    .notas::before { content: ""; display: block; width: 5cm; border-top: 1px solid #000; margin-bottom: 3pt; }
+    .notas p { margin: 0 0 2pt; text-align: justify; }
+    sup { font-size: 8pt; line-height: 0; }
+    figure { margin: 12pt 0; text-align: center; break-inside: avoid; }
+    figure .moldura { display: inline-block; text-align: left; }
+    figure .legenda { font-size: 12pt; margin: 0 0 3pt; text-align: left; }
+    figure img { display: block; border: 1px solid #000; }
+    figure .fonte { font-size: 10pt; margin: 3pt 0 0; text-align: left; }
+    .quadro { margin: 12pt 0; break-inside: avoid; }
+    .quadro .legenda { font-size: 12pt; margin: 0 0 3pt; text-align: center; }
+    .quadro table { width: 100%; border-collapse: collapse; font-size: 10pt; line-height: 1.1; }
+    .quadro th, .quadro td { border: 1px solid #000; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+    .quadro th { font-weight: bold; }
+    .quadro .fonte { font-size: 10pt; margin: 3pt 0 0; }
+    ul.lista { margin: 0 0 6pt; padding-left: 1.2cm; text-align: justify; }
+    ul.lista li { margin-bottom: 2pt; }
+    code { font-family: "Courier New", monospace; font-size: 11pt; }
+    .referencias p { text-align: left; margin: 0 0 12pt; }
+    .referencias h2 { text-align: center; }
+    a { color: #000; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="espaco-notas"></div>
+<div class="notas">
+    <p><sup>1</sup> Graduando(a) do Curso de <span class="preencher">Nome do Curso</span> do Centro Universitário Salesiano. E-mail: <span class="preencher">e-mail do aluno</span>.</p>
+    <p><sup>2</sup> Professor(a) do Centro Universitário Salesiano – Unisales. E-mail: <span class="preencher">e-mail do professor</span>.</p>
+</div>
+
+<section class="capa">
+    <h1>Gestão de horários de aula: desenvolvimento de um sistema web com Java e Spring Boot</h1>
+
+    <div class="autores">
+        <p><span class="preencher">Nome Completo do Aluno</span><sup>1</sup></p>
+        <p><span class="preencher">Nome Completo do Professor</span><sup>2</sup></p>
+    </div>
+
+    <div class="resumo">
+        <p class="titulo-resumo">RESUMO</p>
+        <p>A organização dos horários de aula de uma instituição de ensino relaciona professores, disciplinas e turmas e, quando feita em planilhas ou documentos dispersos, está sujeita a choques de agenda e a dificuldades de consulta. Este artigo apresenta o desenvolvimento de um sistema web para o cadastro e o gerenciamento de horários de aula de professores, construído em Java com o framework Spring Boot. O sistema expõe uma API REST documentada com Swagger, protegida por autenticação básica com usuário e senha, e persiste os dados por meio de mapeamento objeto-relacional com JPA e Hibernate. Sobre essa API foi construída uma interface web que permite cadastrar, editar, excluir e listar professores, disciplinas, turmas e horários, com validação dos formulários, e consultar a grade semanal de um professor ou de uma turma. O projeto segue o padrão MVC em camadas e foi versionado com Git em repositório público no GitHub. Os testes automatizados e a verificação das telas indicaram que o sistema atende aos requisitos propostos.</p>
+        <p><strong>Palavras-chave:</strong> Spring Boot. API REST. Horários de aula. Swagger. Mapeamento objeto-relacional.</p>
+
+        <p class="titulo-resumo">ABSTRACT</p>
+        <p>Organizing class schedules in an educational institution involves relating teachers, courses and classes and, when done with spreadsheets or scattered documents, is prone to scheduling conflicts and hard to query. This article presents the development of a web system for registering and managing teachers' class schedules, built in Java with the Spring Boot framework. The system exposes a REST API documented with Swagger, protected by basic username and password authentication, and persists data through object-relational mapping with JPA and Hibernate. On top of this API, a web interface was built to create, edit, delete and list teachers, courses, classes and schedules, with form validation, and to view the weekly timetable of a teacher or a class. The project follows the layered MVC pattern and was versioned with Git in a public GitHub repository. Automated tests and interface checks showed that the system meets the proposed requirements.</p>
+        <p><strong>Keywords:</strong> Spring Boot. REST API. Class schedules. Swagger. Object-relational mapping.</p>
+    </div>
+</section>
+
+<h2>1 Introdução</h2>
+<p>A elaboração da grade de horários é uma tarefa recorrente na rotina acadêmica. A cada período letivo, a coordenação precisa combinar professores, disciplinas e turmas em dias e intervalos de tempo, garantindo que nenhum professor seja alocado em duas turmas ao mesmo tempo e que nenhuma turma tenha duas aulas simultâneas. Quando esse trabalho é feito em planilhas ou documentos isolados, os choques de horário só são percebidos depois de publicados, e perguntas simples, como "em quais dias o professor leciona?" ou "quais professores atendem esta turma?", exigem cruzar várias fontes manualmente.</p>
+<p>Diante desse problema, o objetivo deste trabalho foi desenvolver um aplicativo web para organização e gerenciamento de horários de aula de professores. Os requisitos definidos foram: telas de cadastro, edição, exclusão e listagem de professores, disciplinas, turmas e horários, com validação básica dos formulários; visualização dos horários por professor, exibindo disciplinas ministradas, turmas associadas e dias e horários das aulas; e visualização dos horários por turma, exibindo professores responsáveis, disciplinas oferecidas e dias e horários das aulas. Como requisitos técnicos, o sistema deveria ser desenvolvido em Java com Spring Boot, ter a API documentada com Swagger, possuir autenticação básica por usuário e senha, persistir os dados com mapeamento objeto-relacional (ORM) e ter o código-fonte versionado em repositório público no GitHub.</p>
+
+<h2>2 Referencial teórico</h2>
+<p>O estilo arquitetural REST (<i>Representational State Transfer</i>) organiza um sistema distribuído em torno de recursos identificados por endereços e manipulados por operações padronizadas do protocolo HTTP, em uma comunicação sem estado entre cliente e servidor (Fielding, 2000). Nesse modelo, cada entidade do domínio, como professores ou turmas, torna-se um recurso acessado pelos métodos GET, POST, PUT e DELETE, e o resultado de cada operação é comunicado por códigos de status HTTP.</p>
+<p>O padrão MVC (<i>Model-View-Controller</i>) separa a aplicação em modelo, visão e controlador, para que regras de negócio, apresentação e tratamento das requisições evoluam de forma independente, e costuma ser complementado por camadas de serviço e de repositório (Fowler, 2002).</p>
+<p>O Spring Boot simplifica a criação de aplicações Spring ao oferecer configuração automática, servidor web embutido e dependências agrupadas por funcionalidade (Walls, 2022). Para a persistência, a especificação JPA (<i>Jakarta Persistence API</i>), implementada pelo Hibernate, mapeia classes Java para tabelas relacionais, permitindo manipular os dados como objetos sem escrever SQL para as operações comuns (Bauer; King; Gregory, 2016).</p>
+<p>A especificação OpenAPI descreve APIs HTTP em um formato legível por máquinas, a partir do qual ferramentas como o Swagger UI geram documentação navegável e permitem testar os endpoints (OpenAPI Initiative, 2024). Já o esquema de autenticação HTTP Basic transmite usuário e senha codificados no cabeçalho de cada requisição, devendo ser usado sobre conexões cifradas em produção (Reschke, 2015).</p>
+
+<h2>3 Metodologia</h2>
+<p>O sistema foi construído de forma incremental, com entregas parciais que acrescentavam funcionalidades sobre uma base já testada, abordagem recomendada quando os requisitos podem ser divididos em partes independentes (Sommerville, 2018). Cada incremento foi registrado em um <i>commit</i> do Git, o que permite acompanhar a evolução do projeto pelo histórico do repositório (Chacon; Straub, 2014).</p>
+<p>Foram utilizados Java 17, Spring Boot 4.1 (Web MVC, Data JPA, Validation e Security), banco H2, springdoc-openapi para o Swagger, Maven e Visual Studio Code. A interface web foi escrita em HTML, CSS e JavaScript e é servida pelo próprio Spring Boot. O código-fonte está disponível no repositório público <a href="https://github.com/Gabrielgbs23/api-horarios">https://github.com/Gabrielgbs23/api-horarios</a>.</p>
+<p>A verificação foi feita em três níveis: testes automatizados de integração com JUnit e MockMvc, executados a cada compilação; um roteiro de 107 verificações das respostas da API, cobrindo cadastros, validações, conflitos, consultas e permissões; e um roteiro de 65 verificações das telas em um navegador, que preenche formulários, confere mensagens de validação e consulta as agendas.</p>
+
+<h2>4 Desenvolvimento</h2>
+<h3>4.1 Arquitetura e modelo de dados</h3>
+<p>O backend foi dividido em pacotes com responsabilidades distintas: <code>model</code> (entidades JPA), <code>repository</code> (acesso ao banco), <code>service</code> (regras de negócio), <code>controller</code> (endpoints REST), <code>dto</code> (entrada e saída com validação), <code>exception</code> (tratamento de erros) e <code>config</code> (segurança, documentação e dados iniciais). A interface web atua como camada de visão e se comunica com o backend apenas pela API. O Quadro 1 resume o modelo de dados.</p>
+
+<div class="quadro">
+    <p class="legenda">Quadro 1 – Entidades do modelo de dados</p>
+    <table>
+        <thead><tr><th style="width:22%">Entidade</th><th>Atributos e relacionamentos</th></tr></thead>
+        <tbody>
+            <tr><td>Professor</td><td>nome, e-mail (único) e titulação</td></tr>
+            <tr><td>Disciplina</td><td>código (único), nome e carga horária</td></tr>
+            <tr><td>Turma</td><td>nome (único), curso, ano letivo e turno</td></tr>
+            <tr><td>Horário</td><td>dia da semana, hora de início, hora de término e sala; referencia um professor, uma disciplina e uma turma (relacionamentos muitos-para-um)</td></tr>
+            <tr><td>Usuário</td><td>nome de usuário, senha criptografada com BCrypt e perfil (ADMIN ou CONSULTA)</td></tr>
+        </tbody>
+    </table>
+    <p class="fonte">Fonte: elaboração própria (2026).</p>
+</div>
+
+<h3>4.2 API REST, validação e regras de negócio</h3>
+<p>Cada entidade possui endpoints para listar, buscar, cadastrar, atualizar e excluir, e duas rotas atendem às consultas: <code>/api/agenda/professores/{id}</code> retorna as disciplinas ministradas, as turmas associadas e as aulas do professor, e <code>/api/agenda/turmas/{id}</code> retorna os professores responsáveis, as disciplinas oferecidas e as aulas da turma, sempre ordenadas por dia e horário. Os dados recebidos são validados com anotações do Bean Validation, e os erros retornam em formato padronizado, indicando o campo inválido.</p>
+<p>As regras de negócio ficam na camada de serviço. Ao salvar um horário, o sistema verifica se a hora de término é posterior à de início e consulta o banco em busca de aulas do mesmo professor ou da mesma turma, no mesmo dia, cujo intervalo se sobreponha ao novo, isto é, que comecem antes do término informado e terminem depois do início informado. Também impede e-mails, códigos e nomes de turma duplicados e bloqueia a exclusão de professores, disciplinas e turmas que ainda possuam horários vinculados. A Figura 1 mostra a documentação gerada no Swagger UI.</p>
+
+<figure>
+    <div class="moldura">
+        <p class="legenda">Figura 1 – Documentação da API no Swagger UI</p>
+        <img src="figuras/13-swagger.png" alt="Swagger UI" style="width:11.5cm">
+        <p class="fonte">Fonte: elaboração própria (2026).</p>
+    </div>
+</figure>
+
+<h3>4.3 Autenticação</h3>
+<p>A segurança foi implementada com Spring Security usando HTTP Basic. Os usuários ficam no banco com senhas criptografadas, e cada requisição é autenticada de forma independente, sem sessão no servidor. O perfil administrador pode ler e alterar dados, e o perfil de consulta pode apenas ler. Requisições sem credenciais válidas recebem o código 401, e alterações tentadas pelo perfil de consulta, o código 403; somente a documentação e os arquivos da interface são públicos.</p>
+
+<h3>4.4 Interface web</h3>
+<p>A interface web começa por uma tela de login e oferece um menu com os cadastros e as consultas. Cada tela de cadastro reúne um formulário de inclusão e edição e uma lista com filtro, botões de edição e exclusão com confirmação. Os formulários validam campos obrigatórios, formato de e-mail, limites de tamanho, carga horária entre 1 e 400 horas e ano letivo no formato AAAA ou AAAA/S, como ilustra a Figura 2. Quando a API recusa uma operação, a mensagem retornada é exibida no próprio formulário, como no choque de horário mostrado na Figura 3.</p>
+
+<figure>
+    <div class="moldura">
+        <p class="legenda">Figura 2 – Validação do formulário de cadastro de professor</p>
+        <img src="figuras/03-validacao-professor.png" alt="Validação do formulário" style="width:11.5cm">
+        <p class="fonte">Fonte: elaboração própria (2026).</p>
+    </div>
+</figure>
+
+<figure>
+    <div class="moldura">
+        <p class="legenda">Figura 3 – Cadastro de horários com choque de horário detectado</p>
+        <img src="figuras/07-horarios-conflito.png" alt="Cadastro de horários" style="width:11.5cm">
+        <p class="fonte">Fonte: elaboração própria (2026).</p>
+    </div>
+</figure>
+
+<p>Nas consultas, o usuário seleciona um professor ou uma turma em uma lista. A tela de horários por professor (Figura 4) exibe as disciplinas ministradas, as turmas associadas e uma grade semanal com os dias e horários das aulas, além do total de aulas e da carga semanal. A tela de horários por turma (Figura 5) exibe os professores responsáveis, as disciplinas oferecidas e a grade semanal da turma. O perfil de consulta acessa as listas e as agendas, mas não vê os formulários e os botões de alteração.</p>
+
+<figure>
+    <div class="moldura">
+        <p class="legenda">Figura 4 – Visualização de horários por professor</p>
+        <img src="figuras/09-agenda-professor.png" alt="Horários por professor" style="width:11.5cm">
+        <p class="fonte">Fonte: elaboração própria (2026).</p>
+    </div>
+</figure>
+
+<figure>
+    <div class="moldura">
+        <p class="legenda">Figura 5 – Visualização de horários por turma</p>
+        <img src="figuras/10-agenda-turma.png" alt="Horários por turma" style="width:11cm">
+        <p class="fonte">Fonte: elaboração própria (2026).</p>
+    </div>
+</figure>
+
+<h3>4.5 Testes e evolução do projeto</h3>
+<p>Os nove testes de integração cobrem autenticação, permissões, validação e o fluxo completo de cadastro de um horário, com detecção de conflito, consultas de agenda e restrições de exclusão; com os roteiros da API e das telas, todos os cenários foram atendidos sem falhas. O Quadro 2 resume a evolução do projeto a partir dos <i>commits</i> do repositório.</p>
+
+<div class="quadro">
+    <p class="legenda">Quadro 2 – Evolução do projeto registrada no GitHub</p>
+    <table>
+        <thead><tr><th style="width:9%">Etapa</th><th style="width:27%">Incremento</th><th>Conteúdo dos commits</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Estrutura e persistência</td><td>Projeto Spring Boot, entidades JPA e repositórios</td></tr>
+            <tr><td>2</td><td>API REST</td><td>DTOs com validação, tratamento de erros, serviços e endpoints</td></tr>
+            <tr><td>3</td><td>Segurança e documentação</td><td>HTTP Basic com perfis, Swagger e dados iniciais</td></tr>
+            <tr><td>4</td><td>Testes da API</td><td>Testes de integração e README com instruções de uso</td></tr>
+            <tr><td>5</td><td>Interface web</td><td>Login, telas de cadastro e consultas de horários</td></tr>
+            <tr><td>6</td><td>Revisão final</td><td>Testes da interface e README com capturas de tela</td></tr>
+        </tbody>
+    </table>
+    <p class="fonte">Fonte: elaboração própria (2026), a partir do histórico do repositório.</p>
+</div>
+
+<h2>5 Conclusão</h2>
+<p>O sistema desenvolvido atende aos requisitos propostos: permite cadastrar, editar, excluir e listar professores, disciplinas, turmas e horários com validação dos formulários; apresenta os horários por professor e por turma; foi construído em Java com Spring Boot; tem a API documentada com Swagger; exige autenticação por usuário e senha; persiste os dados com JPA e Hibernate; e está versionado em repositório público no GitHub. Além do que foi solicitado, a detecção automática de choques de horário e o bloqueio de exclusões com vínculos evitam os erros mais comuns da montagem manual da grade.</p>
+<p>A separação em camadas facilitou a evolução incremental: a API foi concluída e testada antes da interface web, que passou a consumi-la sem exigir mudanças nas regras de negócio. Como limitações, o banco H2 é adequado ao desenvolvimento, mas um ambiente de produção pede um gerenciador como o PostgreSQL, e a autenticação básica deve ser usada com HTTPS. Como trabalhos futuros, sugerem-se a separação dos horários por período letivo, a exportação da grade em PDF e a sugestão automática de horários livres.</p>
+<p>O código-fonte completo, com instruções de execução, está disponível em: <a href="https://github.com/Gabrielgbs23/api-horarios">https://github.com/Gabrielgbs23/api-horarios</a>.</p>
+
+<section class="referencias">
+    <h2>Referências</h2>
+    <p>BAUER, Christian; KING, Gavin; GREGORY, Gary. <strong>Java persistence with Hibernate</strong>. 2. ed. Shelter Island: Manning, 2016.</p>
+    <p>CHACON, Scott; STRAUB, Ben. <strong>Pro Git</strong>. 2. ed. New York: Apress, 2014. Disponível em: https://git-scm.com/book/pt-br/v2. Acesso em: 24 nov. 2026.</p>
+    <p>FIELDING, Roy Thomas. <strong>Architectural styles and the design of network-based software architectures</strong>. 2000. Tese (Doutorado em Information and Computer Science) – University of California, Irvine, 2000.</p>
+    <p>FOWLER, Martin. <strong>Patterns of enterprise application architecture</strong>. Boston: Addison-Wesley, 2002.</p>
+    <p>OPENAPI INITIATIVE. <strong>OpenAPI specification</strong>: version 3.1.1. [<i>S. l.</i>]: OpenAPI Initiative, 2024. Disponível em: https://spec.openapis.org/oas/v3.1.1.html. Acesso em: 24 nov. 2026.</p>
+    <p>RESCHKE, Julian. <strong>The 'Basic' HTTP authentication scheme</strong>: RFC 7617. [<i>S. l.</i>]: Internet Engineering Task Force, 2015. Disponível em: https://www.rfc-editor.org/rfc/rfc7617. Acesso em: 24 nov. 2026.</p>
+    <p>SOMMERVILLE, Ian. <strong>Engenharia de software</strong>. 10. ed. São Paulo: Pearson Education do Brasil, 2018.</p>
+    <p>WALLS, Craig. <strong>Spring in action</strong>. 6. ed. Shelter Island: Manning, 2022.</p>
+</section>
+
+</body>
+</html>

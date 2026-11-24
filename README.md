@@ -168,3 +168,12 @@ curl -u admin:admin123 -X POST http://localhost:8080/api/horarios \
 ```bash
 ./mvnw test
 ```
+
+## Relatório técnico
+
+O artigo científico que descreve o problema, o desenvolvimento e a evolução do projeto está em [`docs/artigo/artigo.pdf`](docs/artigo/artigo.pdf). O PDF é gerado a partir de `docs/artigo/artigo.html` com o Google Chrome instalado:
+
+```bash
+cd docs/artigo
+node gerar-pdf.mjs artigo.html artigo.pdf
+```
