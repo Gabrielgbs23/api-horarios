@@ -17,6 +17,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private static final String[] ROTAS_PUBLICAS = {
+            "/",
+            "/index.html",
+            "/css/**",
+            "/js/**",
+            "/favicon.svg",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**",
