@@ -48,6 +48,35 @@ class ApiHorariosApplicationTests {
     }
 
     @Test
+    void interfaceWebDeveSerPublica() throws Exception {
+        mockMvc.perform(get("/index.html"))
+                .andExpect(status().isOk());
+        mockMvc.perform(get("/js/app.js"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deveInformarUsuarioAutenticado() throws Exception {
+        mockMvc.perform(get("/api/usuarios/me").with(admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("admin"))
+                .andExpect(jsonPath("$.perfil").value("ADMIN"));
+        mockMvc.perform(get("/api/usuarios/me").with(httpBasic("consulta", "consulta123")))
+                .andExpect(jsonPath("$.perfil").value("CONSULTA"));
+    }
+
+    @Test
+    void requisicaoAjaxSemCredenciaisNaoDisparaJanelaDoNavegador() throws Exception {
+        mockMvc.perform(get("/api/usuarios/me").header("X-Requested-With", "XMLHttpRequest"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(result -> {
+                    if (result.getResponse().getHeader("WWW-Authenticate") != null) {
+                        throw new AssertionError("Cabeçalho WWW-Authenticate não deveria ser enviado");
+                    }
+                });
+    }
+
+    @Test
     void documentacaoSwaggerDeveSerPublica() throws Exception {
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk())
