@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ApiHorariosApplication",
+      "request": "launch",
+      "mainClass": "br.edu.unisales.horariosapi.ApiHorariosApplication",
+      "projectName": "api-horarios"
+    }
+  ]
+}
