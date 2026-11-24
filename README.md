@@ -1,6 +1,16 @@
-# API de Gestão de Horários de Aula
+# Gestão de Horários de Aula
 
-API REST desenvolvida em Java com Spring Boot para organização e gerenciamento de horários de aula de professores. O sistema não possui interface gráfica: todas as operações são expostas por endpoints HTTP documentados com Swagger (OpenAPI 3).
+Aplicação web desenvolvida em Java com Spring Boot para organização e gerenciamento de horários de aula de professores. É composta por uma API REST documentada com Swagger (OpenAPI 3), protegida por autenticação HTTP Basic, e por uma interface web que consome essa API.
+
+![Horários por professor](docs/imagens/09-agenda-professor.png)
+
+## Funcionalidades
+
+- Telas de cadastro, edição, exclusão e listagem de professores, disciplinas, turmas e horários, com validação dos formulários.
+- Visualização de horários por professor: disciplinas ministradas, turmas associadas e dias e horários das aulas.
+- Visualização de horários por turma: professores responsáveis, disciplinas oferecidas e dias e horários das aulas.
+- Controle de acesso por perfil: administrador (leitura e escrita) e consulta (somente leitura).
+- Documentação interativa da API no Swagger UI.
 
 ## Tecnologias
 
@@ -8,22 +18,29 @@ API REST desenvolvida em Java com Spring Boot para organização e gerenciamento
 - Spring Boot 4.1 (Web MVC, Data JPA, Validation, Security)
 - Hibernate (ORM) com banco H2 em arquivo
 - springdoc-openapi (Swagger UI)
+- HTML, CSS e JavaScript (interface web servida pelo próprio Spring Boot)
 - JUnit 5 e MockMvc
 - Maven Wrapper
 
 ## Arquitetura
 
-O projeto segue o padrão MVC em camadas, com separação de responsabilidades:
+O projeto segue o padrão MVC em camadas, com separação de responsabilidades. Os controllers expõem a API REST, a interface web (camada de visão) é servida como conteúdo estático e conversa com o backend apenas pela API.
 
 ```
-src/main/java/br/edu/unisales/horariosapi
-├── config       Segurança (HTTP Basic), Swagger e carga inicial de dados
-├── controller   Endpoints REST (camada de entrada)
-├── dto          Objetos de requisição e resposta com validações
-├── exception    Exceções de negócio e tratamento global de erros
-├── model        Entidades JPA (Professor, Disciplina, Turma, Horario, Usuario)
-├── repository   Interfaces Spring Data JPA
-└── service      Regras de negócio
+src/main
+├── java/br/edu/unisales/horariosapi
+│   ├── config       Segurança (HTTP Basic), Swagger e carga inicial de dados
+│   ├── controller   Endpoints REST (camada de entrada)
+│   ├── dto          Objetos de requisição e resposta com validações
+│   ├── exception    Exceções de negócio e tratamento global de erros
+│   ├── model        Entidades JPA (Professor, Disciplina, Turma, Horario, Usuario)
+│   ├── repository   Interfaces Spring Data JPA
+│   └── service      Regras de negócio
+└── resources/static
+    ├── index.html   Página única da interface web
+    ├── css          Estilos
+    └── js           api.js (cliente HTTP), crud.js (telas de cadastro),
+                     agenda.js (consultas de horários), app.js (rotas e login)
 ```
 
 ## Modelo de dados
@@ -61,10 +78,27 @@ No Windows:
 
 A aplicação sobe em `http://localhost:8080`.
 
+- Interface web: `http://localhost:8080`
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
 Na primeira execução são carregados professores, disciplinas, turmas e horários de exemplo.
+
+## Interface web
+
+| Tela | Descrição |
+|------|-----------|
+| Login | Entrada com usuário e senha |
+| Início | Totais cadastrados e atalhos para as consultas |
+| Professores, Disciplinas, Turmas, Horários | Formulário de cadastro e edição com validação, lista com filtro, edição e exclusão com confirmação |
+| Horários por professor | Seleção do professor; disciplinas ministradas, turmas associadas e grade semanal das aulas |
+| Horários por turma | Seleção da turma; professores responsáveis, disciplinas oferecidas e grade semanal das aulas |
+
+Os formulários validam campos obrigatórios, formato de e-mail, limites de tamanho, carga horária entre 1 e 400, ano letivo no formato `AAAA` ou `AAAA/S` e término posterior ao início. Erros devolvidos pela API (duplicidade, choque de horário, exclusão com vínculos) são exibidos na tela. O perfil de consulta vê as listas e as consultas, sem as ações de alteração.
+
+| Cadastro com validação | Horários por turma |
+|---|---|
+| ![Validação](docs/imagens/03-validacao-professor.png) | ![Agenda da turma](docs/imagens/10-agenda-turma.png) |
 
 ## Autenticação
 
@@ -77,7 +111,7 @@ A API usa autenticação HTTP Basic com usuários persistidos no banco.
 
 As credenciais podem ser alteradas pelas variáveis de ambiente `ADMIN_USUARIO`, `ADMIN_SENHA`, `CONSULTA_USUARIO` e `CONSULTA_SENHA`.
 
-No Swagger, clique em **Authorize** e informe usuário e senha.
+Na interface web, entre com usuário e senha na tela de login. No Swagger, clique em **Authorize** e informe usuário e senha.
 
 ## Endpoints
 
@@ -105,6 +139,7 @@ No Swagger, clique em **Authorize** e informe usuário e senha.
 | DELETE | `/api/horarios/{id}`                  | Exclui horário                    |
 | GET    | `/api/agenda/professores/{id}`        | Disciplinas, turmas e aulas do professor |
 | GET    | `/api/agenda/turmas/{id}`             | Professores, disciplinas e aulas da turma |
+| GET    | `/api/usuarios/me`                    | Usuário autenticado e perfil      |
 
 ### Exemplo de cadastro de horário
 
